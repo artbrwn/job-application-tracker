@@ -24,8 +24,14 @@ class Application(models.Model):
     description = models.TextField()
     required_experience = models.CharField(max_length=1, choices=Experience.choices)
     application_date = models.DateTimeField()
-    response_date = models.DateField()
+    response_date = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices)
+
+    def __str__(self):
+        return f"{self.title}, {self.company}"
 
 class Company(models.Model):
     name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
