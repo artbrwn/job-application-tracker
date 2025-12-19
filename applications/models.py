@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Application(models.Model):
     class Status(models.TextChoices):
-        APPLIED = "APPLIED", "Solicitad"
+        APPLIED = "APPLIED", "Solicitado"
         IN_PROCESS = "PROCESS", "En proceso"
         REJECTED_AFTER_REVIEW = "REJ_REV", "Rechazo tras entrevista"
         REJECTED_DIRECTLY = "REJ_DIR", "Rechazo directo"
