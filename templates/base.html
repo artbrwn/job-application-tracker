@@ -13,8 +13,12 @@
     <nav class="menu">
         <ul>
             <li><a href="/">Inicio</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url "users:logout" %}">Salir</a></li>
+            {% else %}
             <li><a href={% url "users:register" %}>Registrarse</a></li>
             <li><a href={% url "users:login" %}>Acceder</a></li>
+            {% endif %}
         </ul>
     </nav>
     <main>

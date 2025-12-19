@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<table>
+    <tr>
+        <th>Puesto</th>
+        <th>Empresa</th>
+        <th>Enlace</th>
+        <th>Descripción</th>
+        <th>Experiencia requerida</th>
+        <th>Ciudad</th>
+        <th>Fecha solicitud</th>
+        <th>Fecha respuesta</th>
+        <th>Estado</th>
+    </tr>
+    {% if applications %}
+        {% for application in applications %}
+        <tr>
+            <td>{{ application.title }}</td>
+            <td>{{ application.company }}</td>
+            <td>{{ application.url }}</td>
+            <td>{{ application.description }}</td>
+            <td>{{ application.required_experience }}</td>
+            <td>{{ application.location }}</td>
+            <td>{{ application.application_date }}</td>
+            <td>{{ application.response_date }}</td>
+            <td>{{ application.status }}</td>
+        </tr>
+        {% endfor %}
+
+    {% else %}
+    <tr>
+        <td>
+            No hay candidaturas registradas.
+        </td>
+    </tr>
+    {% endif %}
+</table>
+{% endblock content %}

@@ -19,7 +19,7 @@ def login_view(request):
         form = CustomAuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect("")
+            return redirect("applications:applications_list")
     else:
         form = CustomAuthenticationForm()
     
