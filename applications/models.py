@@ -17,15 +17,15 @@ class Application(models.Model):
         FIVE_PLUS_YEARS = "5", "5 or more years of experience required"
 
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, verbose_name=("Título del puesto"), help_text=("Ej: Desarrollador Backend Python"))
     company = models.ForeignKey("Company", on_delete=models.CASCADE)
-    url = models.URLField()
-    location = models.CharField(max_length=100)
-    description = models.TextField()
-    required_experience = models.CharField(max_length=1, choices=Experience.choices)
+    url = models.URLField(verbose_name=("URL"), help_text=("Enlace a la oferta"))
+    location = models.CharField(max_length=100, verbose_name=("Localización"), help_text=("Madrid, Barcelona..."))
+    description = models.TextField(verbose_name=("Descripción"), help_text=("Tareas, certificaciones, requisitos..."))
+    required_experience = models.CharField(max_length=1, choices=Experience.choices, verbose_name=("Experiencia requerida"))
     application_date = models.DateTimeField()
-    response_date = models.DateField(null=True, blank=True)
-    status = models.CharField(max_length=10, choices=Status.choices)
+    response_date = models.DateField(null=True, blank=True, verbose_name=("Fecha de respuesta"), help_text=("Fecha de respuesta"))
+    status = models.CharField(max_length=10, choices=Status.choices, verbose_name=("Estado"))
 
     def __str__(self):
         return f"{self.title}, {self.company}"
