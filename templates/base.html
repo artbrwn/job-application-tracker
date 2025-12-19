@@ -10,8 +10,12 @@
     </title>
 </head>
 <body>
-    <nav>
-        Navigation
+    <nav class="menu">
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href={% url "users:register" %}>Registrarse</a></li>
+            <li><a href={% url "users:login" %}>Acceder</a></li>
+        </ul>
     </nav>
     <main>
         {% block content %}
