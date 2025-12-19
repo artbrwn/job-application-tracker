@@ -25,8 +25,5 @@ def login_view(request):
     
     return render(request, "users/login.html", {"form": form})
 
-def logout(request):
-    return HttpResponse("Logout page")
-
 def profile(request):
     return HttpResponse("Profile page")

@@ -14,7 +14,14 @@
         <ul>
             <li><a href="/">Inicio</a></li>
             {% if user.is_authenticated %}
-            <li><a href="{% url "users:logout" %}">Salir</a></li>
+                <li>
+                    <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; color: #007bff; cursor: pointer;">
+                            Salir
+                        </button>
+                    </form>
+                </li>
             {% else %}
             <li><a href={% url "users:register" %}>Registrarse</a></li>
             <li><a href={% url "users:login" %}>Acceder</a></li>
