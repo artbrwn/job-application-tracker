@@ -3,18 +3,20 @@ from django.db import models
 # Create your models here.
 class Application(models.Model):
     class Status(models.TextChoices):
-        APPLIED = "APPLIED", "Applied"
-        IN_PROCESS = "PROCESS", "In Process"
-        REJECTED_AFTER_REVIEW = "REJ_REV", "Rejected after review"
-        REJECTED_DIRECTLY = "REJ_DIR", "Directly Rejected"
+        APPLIED = "APPLIED", "Solicitad"
+        IN_PROCESS = "PROCESS", "En proceso"
+        REJECTED_AFTER_REVIEW = "REJ_REV", "Rechazo tras entrevista"
+        REJECTED_DIRECTLY = "REJ_DIR", "Rechazo directo"
     
     class Experience(models.TextChoices):
-        ZERO = "0", "No experience required"
-        ONE_YEAR = "1", "1 year of experience required"
-        TWO_YEARS = "2", "2 years of experience required"
-        THREE_YEARS = "3", "3 years of experience required"
-        FOUR_YEARS = "4", "4 years of experience required"
-        FIVE_PLUS_YEARS = "5", "5 or more years of experience required"
+        ZERO = "0", "Sin experiencia"
+        ONE_YEAR = "1", "1 año"
+        TWO_YEARS = "2", "2 años"
+        THREE_YEARS = "3", "3 años"
+        FOUR_YEARS = "4", "4 años"
+        FIVE_PLUS_YEARS = "5", "5 años"
+        NOT_SPECIFIED = "6", "No especificado"
+
 
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name=("Título del puesto"), help_text=("Ej: Desarrollador Backend Python"))

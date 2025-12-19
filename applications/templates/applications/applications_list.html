@@ -26,11 +26,11 @@
             <td>{{ application.company }}</td>
             <td>{{ application.url }}</td>
             <td>{{ application.description }}</td>
-            <td>{{ application.required_experience }}</td>
+            <td>{{ application.get_required_experience_display }}</td>
             <td>{{ application.location }}</td>
             <td>{{ application.application_date }}</td>
             <td>{{ application.response_date }}</td>
-            <td>{{ application.status }}</td>
+            <td>{{ application.get_status_display }}</td>
         </tr>
         {% endfor %}
 
