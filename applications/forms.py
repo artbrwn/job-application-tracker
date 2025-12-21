@@ -17,6 +17,12 @@ class ApplicationForm(ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            
+            if field.help_text:
+                field.widget.attrs['placeholder'] = field.help_text
     
     def save(self, commit=True, user=None):
         company_name = self.cleaned_data['company_name']

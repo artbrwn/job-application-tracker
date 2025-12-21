@@ -1,45 +1,133 @@
 {% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block title %}Mis Candidaturas{% endblock %}
+
 {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="">Guardar</button>
-</form>
+<div class="row mb-4">
+    <div class="col">
+        <h2>Registrar Nueva Candidatura</h2>
+    </div>
+</div>
 
-<table>
-    <tr>
-        <th>Puesto</th>
-        <th>Empresa</th>
-        <th>Enlace</th>
-        <th>Descripción</th>
-        <th>Experiencia requerida</th>
-        <th>Ciudad</th>
-        <th>Fecha solicitud</th>
-        <th>Fecha respuesta</th>
-        <th>Estado</th>
-    </tr>
-    {% if applications %}
-        {% for application in applications %}
-        <tr>
-            <td>{{ application.title }}</td>
-            <td>{{ application.company }}</td>
-            <td>{{ application.url }}</td>
-            <td>{{ application.description }}</td>
-            <td>{{ application.get_required_experience_display }}</td>
-            <td>{{ application.location }}</td>
-            <td>{{ application.application_date }}</td>
-            <td>{{ application.response_date }}</td>
-            <td>{{ application.get_status_display }}</td>
-        </tr>
-        {% endfor %}
+<div class="row mb-5">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.company_name.label_tag }}
+                            {{ form.company_name }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            {{ form.url.label_tag }}
+                            {{ form.url }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.location.label_tag }}
+                            {{ form.location }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.required_experience.label_tag }}
+                            {{ form.required_experience }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            {{ form.description.label_tag }}
+                            {{ form.description }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.status.label_tag }}
+                            {{ form.status }}
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-    {% else %}
-    <tr>
-        <td>
-            No hay candidaturas registradas.
-        </td>
-    </tr>
-    {% endif %}
-</table>
+<div class="row">
+    <div class="col">
+        <h2>Mis Candidaturas</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        {% if applications %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Puesto</th>
+                            <th>Empresa</th>
+                            <th>Enlace</th>
+                            <th>Descripción</th>
+                            <th>Experiencia</th>
+                            <th>Ciudad</th>
+                            <th>Fecha solicitud</th>
+                            <th>Fecha respuesta</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in applications %}
+                        <tr>
+                            <td>{{ application.title }}</td>
+                            <td>{{ application.company }}</td>
+                            <td>
+                                <a href="{{ application.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    Ver oferta
+                                </a>
+                            </td>
+                            <td>{{ application.description|truncatewords:10 }}</td>
+                            <td>{{ application.get_required_experience_display }}</td>
+                            <td>{{ application.location }}</td>
+                            <td>{{ application.application_date|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if application.response_date %}
+                                    {{ application.response_date|date:"d/m/Y" }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">
+                                    {{ application.get_status_display }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                No hay candidaturas registradas todavía.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
 {% endblock content %}
