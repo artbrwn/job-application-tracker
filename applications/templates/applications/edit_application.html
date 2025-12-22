@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% load bootstrap5 %}
+
+{% block title %}Editar Candidatura{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+    <div class="col">
+        <h2>Editar Candidatura</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.company_name.label_tag }}
+                            {{ form.company_name }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            {{ form.url.label_tag }}
+                            {{ form.url }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.location.label_tag }}
+                            {{ form.location }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.required_experience.label_tag }}
+                            {{ form.required_experience }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            {{ form.description.label_tag }}
+                            {{ form.description }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.status.label_tag }}
+                            {{ form.status }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.response_date.label_tag }}
+                            {{ form.response_date }}
+                        </div>
+                    </div>
+                        
+                    
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <a href="{% url 'applications:applications_list' %}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock content %}

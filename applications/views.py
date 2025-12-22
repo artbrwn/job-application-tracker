@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Application
 from .forms import ApplicationForm
@@ -21,3 +21,23 @@ def applications_list(request):
     applications = Application.objects.filter(user=request.user).order_by('-application_date')
 
     return render(request, "applications/applications_list.html", {'applications': applications, "form": form})
+
+@login_required
+def edit_application(request, pk):
+    application = get_object_or_404(Application, pk=pk, user=request.user)
+    
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST, instance=application)
+        if form.is_valid():
+            form.save(user=request.user)
+            return redirect('applications:applications_list')
+
+    else:
+        form = ApplicationForm(instance=application, initial={
+            'company_name': application.company.name
+        })
+    
+    return render(request, 'applications/edit_application.html', {
+        'form': form,
+        'application': application
+    })

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
+{% load bootstrap_icons %}
 
 {% block title %}Mis Candidaturas{% endblock %}
 
@@ -89,6 +90,7 @@
                             <th>Fecha solicitud</th>
                             <th>Fecha respuesta</th>
                             <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,6 +118,9 @@
                                 <span class="badge bg-secondary">
                                     {{ application.get_status_display }}
                                 </span>
+                            </td>
+                            <td>
+                                <a href="{% url "applications:edit_application" application.pk %}" class="btn btn-sm btn-outline-secondary"> {% bs_icon 'pencil-square' %} </a>
                             </td>
                         </tr>
                         {% endfor %}

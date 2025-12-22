@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "users",
     "applications",
     "dashboard",
-    'bootstrap5'
+    "bootstrap5",
+    "django_bootstrap_icons"
 ]
 
 MIDDLEWARE = [
