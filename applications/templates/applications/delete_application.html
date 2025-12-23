@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Eliminar candidatura</h5>
+                <div class="card-text">
+                    Vas a eliminar la candidatura de {{ application.title }} en {{ application.company.name }}. Este proceso no se puede revertir, ¿deseas continuar?
+                    <form action={% url "applications:delete_application" application.pk %} method="POST">
+                        {% csrf_token %}
+                        <a href={% url "applications:applications_list" %}>Volver atrás</a>
+                        <input type="submit" value="Eliminar">
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

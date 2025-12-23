@@ -18,7 +18,7 @@ def applications_list(request):
             return redirect('applications:applications_list')
             
     form = ApplicationForm()
-    applications = Application.objects.filter(user=request.user).order_by('-application_date')
+    applications = Application.objects.filter(user=request.user).select_related('company').order_by('-application_date')
 
     return render(request, "applications/applications_list.html", {'applications': applications, "form": form})
 
@@ -41,3 +41,15 @@ def edit_application(request, pk):
         'form': form,
         'application': application
     })
+
+@login_required
+def delete_application(request, pk):
+    application = get_object_or_404(Application, pk=pk, user=request.user)
+
+    if request.method == "POST":
+        application.delete()
+        # Add confirmation message
+        return redirect("applications:applications_list")
+        
+
+    return render(request, "applications/delete_application.html", {"application": application})

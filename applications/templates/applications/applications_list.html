@@ -120,7 +120,10 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="{% url "applications:edit_application" application.pk %}" class="btn btn-sm btn-outline-secondary"> {% bs_icon 'pencil-square' %} </a>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url "applications:edit_application" application.pk %}" class="btn btn-sm btn-outline-secondary"> {% bs_icon 'pencil-square' %} </a>
+                                    <a href="{% url "applications:delete_application" application.pk %}" class="btn btn-sm btn-outline-danger"> {% bs_icon 'trash' %} </a>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
