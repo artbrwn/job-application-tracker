@@ -31,6 +31,16 @@ class Application(models.Model):
 
     def __str__(self):
         return f"{self.title}, {self.company}"
+    
+    @property
+    def status_badge_class(self):
+        status_classes = {
+            "APPLIED": "bg-secondary",
+            "PROCESS": "bg-success",
+            "REJ_DIR": "bg-danger",
+            "REJ_REV": "bg-warning"
+        }
+        return status_classes.get(self.status, "bg-secondary")
 
 class Company(models.Model):
     name = models.CharField(max_length=100, unique=True)
