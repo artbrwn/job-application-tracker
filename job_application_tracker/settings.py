@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "applications",
     "dashboard",
     "bootstrap5",
-    "django_bootstrap_icons"
+    "django_bootstrap_icons",
+    "debug_toolbar"
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'job_application_tracker.urls'
@@ -132,4 +134,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "users.User"
 
+
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/' 
+
+INTERNAL_IPS = ['127.0.0.1']
