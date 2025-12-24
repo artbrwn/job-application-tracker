@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "applications",
     "dashboard",
     "bootstrap5",
-    "django_bootstrap_icons",
     "debug_toolbar"
 ]
 
