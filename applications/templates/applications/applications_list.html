@@ -5,6 +5,16 @@
 
 {% block content %}
 
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
 <div class="row mb-4">
     <div class="col">
         <h2>Registrar Nueva Candidatura</h2>

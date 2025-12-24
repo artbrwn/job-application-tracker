@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Application
 from .forms import ApplicationForm
 from datetime import datetime
+from django.contrib import messages
 
 # Create your views here.
 @login_required
@@ -31,6 +32,7 @@ def edit_application(request, pk):
         form = ApplicationForm(request.POST, instance=application)
         if form.is_valid():
             form.save(user=request.user)
+            messages.success(request, f'La candidatura ha sido editada correctamente.')
             return redirect('applications:applications_list')
 
     else:
@@ -48,9 +50,13 @@ def delete_application(request, pk):
     application = get_object_or_404(Application, pk=pk, user=request.user)
 
     if request.method == "POST":
+        app_title = application.title
+        app_company = application.company.name
+
         application.delete()
-        # Add confirmation message
+        
+        messages.success(request, f'La candidatura para el puesto "{app_title}" en {app_company} ha sido eliminada correctamente.')
+
         return redirect("applications:applications_list")
         
-
     return render(request, "applications/delete_application.html", {"application": application})
