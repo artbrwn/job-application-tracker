@@ -17,11 +17,8 @@ def applications_list(request):
             application.application_date = datetime.now()
             application.save()
             return redirect('applications:applications_list')
-    print(f"Enter get request: {datetime.now()}")
     form = ApplicationForm()
-    print(f"Done create form instance: {datetime.now()}")
     applications = Application.objects.filter(user=request.user).select_related('company').order_by('-application_date')
-    print(f"Finished getting applications: {datetime.now()}")
     return render(request, "applications/applications_list.html", {'applications': applications, "form": form})
 
 @login_required
