@@ -2,7 +2,7 @@ from django.test import TestCase
 from applications.models import Application, Company
 from users.models import User
 from datetime import datetime, timedelta
-from .services import get_average_applications, get_percentage_rejected
+from .services import get_average_applications, get_percentage_rejected, get_average_time_response
 
 # Create your tests here.
 class TestDashboardService(TestCase):
@@ -48,6 +48,10 @@ class TestDashboardService(TestCase):
     def test_get_percentage_empty(self):
         percentage = get_average_applications(self.empty_user)
         self.assertEqual(percentage, 0)
+
+    def test_get_average_time_response(self):
+        average_time = get_average_time_response(self.user)
+        self.assertEqual(average_time, 4)
     
     def test_get_basic_stats(self):
         pass
