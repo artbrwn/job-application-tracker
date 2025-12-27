@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="row m-4">
     <div class="col m-4">
         <div class="card">
@@ -36,4 +37,50 @@
         </div>
     </div>
 </div>
+<div class="row m-4">
+    <canvas id="evolutionChart"></canvas>
+</div>
+
+<script>
+    var chartData = JSON.parse('{{ evolution_data|safe }}');
+    
+    var ctx = document.getElementById('evolutionChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: { 
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Evolución de Candidaturas'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cantidad'
+                    },
+                    ticks: {
+                        stepSize: 1,
+                        callback: function(value) {
+                            if (Number.isInteger(value)) {
+                                return value;
+                            }
+                            return null;
+                        }
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Fecha'
+                    }
+                }
+            }
+        }
+    });
+</script>
 {% endblock content %}

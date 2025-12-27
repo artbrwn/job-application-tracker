@@ -1,5 +1,6 @@
 from applications.models import Application
 from datetime import datetime, timezone, timedelta
+from collections import Counter
 
 def get_basic_metrics(user):
     applications = Application.objects.filter(user=user).order_by("application_date")
@@ -16,7 +17,37 @@ def get_basic_metrics(user):
     return metrics
 
 def get_evolution_data(user):
-    pass
+    applications = Application.objects.filter(user=user).order_by("application_date")
+
+    start_date = applications.first().application_date.date()
+    end_date = datetime.now().date()
+
+    current_date = start_date
+    date_range = []
+    while current_date <= end_date:
+        date_range.append(current_date)
+        current_date += timedelta(days=1)
+
+    labels = [date.strftime("%Y-%m-%d") for date in date_range]
+
+    applications_per_day = Counter(str(app.application_date.date()) for app in applications)
+    values = []
+    for date in date_range:
+        date_str = date.strftime("%Y-%m-%d")
+        values.append(applications_per_day.get(date_str, 0))
+
+    evolution_data = {
+        "labels": labels,
+        "datasets": [{
+            "label": "Postulaciones por día",
+            "data": values,
+            "fill": False,
+            "borderColor": "rgb(13, 110, 253)",
+            "tension": 0.1
+        }]
+    }
+    return evolution_data
+
 
 def get_average_applications_per_day(user):
     applications = Application.objects.filter(user=user).order_by("application_date")
