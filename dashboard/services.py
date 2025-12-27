@@ -3,6 +3,7 @@ from datetime import datetime, timezone, timedelta
 
 def get_basic_metrics(user):
     applications = Application.objects.filter(user=user).order_by("application_date")
+    metrics = {}
     if applications:
         rejected = len([a for a in applications if a.status == "REJ_DIR" or a.status == "REJ_REV"])
         metrics = {
@@ -11,13 +12,7 @@ def get_basic_metrics(user):
                 "percentage_rejected": get_percentage_rejected(user),
                 "average_time_response": get_average_time_response(user)
             }
-    else:
-        metrics = {
-            "total": None,
-            "rejected": None,
-            "percentage_rejected": None,
-            "average_time_response": None
-        }
+
     return metrics
 
 def get_evolution_data(user):

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row m-4">
+    <div class="col m-4">
+        <div class="card">
+            <h5 class="card-title">Número de candidaturas</h5>
+            <div class="card-text">
+                {{ metrics.total }}
+            </div>
+        </div>
+    </div>
+    <div class="col m-4">
+        <div class="card">
+            <h5 class="card-title">Candidaturas rechazadas</h5>
+            <div class="card-text">
+                {{ metrics.rejected }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row m-4">
+    <div class="col m-4">
+        <div class="card">
+            <h5 class="card-title">Porcentaje rechazadas</h5>
+            <div class="card-text">
+                {{ metrics.percentage_rejected }}
+            </div>
+        </div>
+    </div>
+    <div class="col m-4">
+        <div class="card">
+            <h5 class="card-title">Tiempo medio de respuesta</h5>
+            <div class="card-text">
+                {{ metrics.average_time_response }} días
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

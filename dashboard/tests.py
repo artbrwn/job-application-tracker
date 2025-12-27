@@ -65,10 +65,6 @@ class TestDashboardService(TestCase):
 
     def test_get_basic_stats_empty_user(self):
         expected_metrics = {
-            "total": None,
-            "rejected": None,
-            "percentage_rejected": None,
-            "average_time_response": None
         }
         recieved_metrics = get_basic_metrics(self.empty_user)
         self.assertEqual(expected_metrics, recieved_metrics)
