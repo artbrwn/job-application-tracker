@@ -24,7 +24,7 @@
         <div class="card">
             <h5 class="card-title">Porcentaje rechazadas</h5>
             <div class="card-text">
-                {{ metrics.percentage_rejected }}
+                {{ metrics.percentage_rejected|floatformat:2 }}%
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
         <div class="card">
             <h5 class="card-title">Tiempo medio de respuesta</h5>
             <div class="card-text">
-                {{ metrics.average_time_response }} días
+                {{ metrics.average_time_response|floatformat:1 }} días
             </div>
         </div>
     </div>

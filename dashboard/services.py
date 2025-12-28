@@ -30,19 +30,34 @@ def get_evolution_data(user):
 
     labels = [date.strftime("%Y-%m-%d") for date in date_range]
 
+    # ----- Applications data -----
     applications_per_day = Counter(str(app.application_date.date()) for app in applications)
-    values = []
+    applications_values = []
     for date in date_range:
         date_str = date.strftime("%Y-%m-%d")
-        values.append(applications_per_day.get(date_str, 0))
+        applications_values.append(applications_per_day.get(date_str, 0))
+
+    # ----- Rejections data -----
+    rejections_per_day = Counter(str(app.response_date) for app in applications if app.status == "REJ_REV" or app.status == "REJ_DIR")
+    rejections_values = []
+    for date in date_range:
+        date_str = date.strftime("%Y-%m-%d")
+        rejections_values.append(rejections_per_day.get(date_str, 0))
 
     evolution_data = {
         "labels": labels,
         "datasets": [{
             "label": "Postulaciones por día",
-            "data": values,
+            "data": applications_values,
             "fill": False,
             "borderColor": "rgb(13, 110, 253)",
+            "tension": 0.1
+        },
+        {
+            "label": "Rechazos por día",
+            "data": rejections_values,
+            "fill": False,
+            "borderColor": "rgb(220, 53, 69)",
             "tension": 0.1
         }]
     }

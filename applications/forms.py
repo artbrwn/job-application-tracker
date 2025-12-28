@@ -32,10 +32,9 @@ class ApplicationForm(ModelForm):
         
         if self.instance and self.instance.pk:
             application_date = self.instance.application_date.date()
-            print(f"Application date: {application_date}, Edited date: {response_date}")
             if response_date and response_date < application_date:
                 raise ValidationError(
-                    'La fecha de respuesta no puede ser anterior a la fecha de solicitud.'
+                    f'La fecha de respuesta no puede ser anterior a la fecha de solicitud ({application_date}).'
                 )
         
         return cleaned_data
