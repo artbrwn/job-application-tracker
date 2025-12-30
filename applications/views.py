@@ -16,6 +16,7 @@ def applications_list(request):
             application.user = request.user
             application.application_date = datetime.now()
             application.save()
+            messages.success(request, f'La candidatura se ha guardado correctamente')
             return redirect('applications:applications_list')
     form = ApplicationForm()
     applications = Application.objects.filter(user=request.user).select_related('company').order_by('-application_date')
