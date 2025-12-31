@@ -10,8 +10,10 @@ def register_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            redirect("")
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Usuario creado")
+            return redirect("applications:applications_list")
     else:
         form = CustomUserCreationForm()
     return render(request, "users/register.html", {"form": form})
