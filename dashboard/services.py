@@ -22,30 +22,18 @@ def get_evolution_data(user):
     start_date = applications.first().application_date.date()
     end_date = datetime.now().date()
 
-    current_date = start_date
-    date_range = []
-    while current_date <= end_date:
-        date_range.append(current_date)
-        current_date += timedelta(days=1)
+    all_days_in_date_range = get_all_days_in_time_range(start_date, end_date)
 
-    labels = [date.strftime("%Y-%m-%d") for date in date_range]
+    dates = [date.strftime("%Y-%m-%d") for date in all_days_in_date_range]
 
-    # ----- Applications data -----
     applications_per_day = Counter(str(app.application_date.date()) for app in applications)
-    applications_values = []
-    for date in date_range:
-        date_str = date.strftime("%Y-%m-%d")
-        applications_values.append(applications_per_day.get(date_str, 0))
+    applications_values = get_amount_per_day(applications_per_day, all_days_in_date_range)
 
-    # ----- Rejections data -----
     rejections_per_day = Counter(str(app.response_date) for app in applications if app.status == "REJ_REV" or app.status == "REJ_DIR")
-    rejections_values = []
-    for date in date_range:
-        date_str = date.strftime("%Y-%m-%d")
-        rejections_values.append(rejections_per_day.get(date_str, 0))
+    rejections_values = get_amount_per_day(rejections_per_day, all_days_in_date_range)
 
     evolution_data = {
-        "labels": labels,
+        "labels": dates,
         "datasets": [{
             "label": "Postulaciones por día",
             "data": applications_values,
@@ -63,6 +51,21 @@ def get_evolution_data(user):
     }
     return evolution_data
 
+def get_amount_per_day(applications_per_day: Counter, date_range: list) -> list[int]:
+    applications_values = []
+    for date in date_range:
+        date_str = date.strftime("%Y-%m-%d")
+        applications_values.append(applications_per_day.get(date_str, 0))
+    
+    return applications_values
+
+def get_all_days_in_time_range(start_date:datetime, end_date:datetime) -> list:
+    current_date = start_date
+    date_range = []
+    while current_date <= end_date:
+        date_range.append(current_date)
+        current_date += timedelta(days=1)
+    return date_range
 
 def get_average_applications_per_day(user):
     applications = Application.objects.filter(user=user).order_by("application_date")
