@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% if metrics and evolution_data %}
 <div class="row m-4">
     <div class="col m-4">
         <div class="card">
@@ -83,4 +84,10 @@
         }
     });
 </script>
+
+{% else %}
+    <div class="alert alert-info">
+        No hay candidaturas registradas todavía.
+    </div>
+{% endif %}
 {% endblock content %}

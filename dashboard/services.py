@@ -18,40 +18,45 @@ def get_basic_metrics(user):
 
 def get_evolution_data(user):
     applications = Application.objects.filter(user=user).order_by("application_date")
+    evolution_data = {}
+    if applications:
 
-    start_date = applications.first().application_date.date()
-    end_date = datetime.now().date()
+        start_date = applications.first().application_date.date()
+        end_date = datetime.now().date()
 
-    all_days_in_date_range = get_all_days_in_time_range(start_date, end_date)
+        all_days_in_date_range = get_all_days_in_time_range(start_date, end_date)
 
-    dates = [date.strftime("%Y-%m-%d") for date in all_days_in_date_range]
+        dates = [date.strftime("%Y-%m-%d") for date in all_days_in_date_range]
 
-    applications_per_day = Counter(str(app.application_date.date()) for app in applications)
-    applications_values = get_amount_per_day(applications_per_day, all_days_in_date_range)
+        applications_per_day = Counter(str(app.application_date.date()) for app in applications)
+        applications_values = get_amount_per_day(applications_per_day, all_days_in_date_range)
 
-    rejections_per_day = Counter(str(app.response_date) for app in applications if app.status == "REJ_REV" or app.status == "REJ_DIR")
-    rejections_values = get_amount_per_day(rejections_per_day, all_days_in_date_range)
+        rejections_per_day = Counter(str(app.response_date) for app in applications if app.status == "REJ_REV" or app.status == "REJ_DIR")
+        rejections_values = get_amount_per_day(rejections_per_day, all_days_in_date_range)
 
-    evolution_data = {
-        "labels": dates,
-        "datasets": [{
-            "label": "Postulaciones por día",
-            "data": applications_values,
-            "fill": False,
-            "borderColor": "rgb(13, 110, 253)",
-            "tension": 0.1
-        },
-        {
-            "label": "Rechazos por día",
-            "data": rejections_values,
-            "fill": False,
-            "borderColor": "rgb(220, 53, 69)",
-            "tension": 0.1
-        }]
-    }
+        evolution_data = {
+            "labels": dates,
+            "datasets": [{
+                "label": "Postulaciones por día",
+                "data": applications_values,
+                "fill": False,
+                "borderColor": "rgb(13, 110, 253)",
+                "tension": 0.1
+            },
+            {
+                "label": "Rechazos por día",
+                "data": rejections_values,
+                "fill": False,
+                "borderColor": "rgb(220, 53, 69)",
+                "tension": 0.1
+            }]
+        }
     return evolution_data
 
 def get_amount_per_day(applications_per_day: Counter, date_range: list) -> list[int]:
+    """
+    Includes days with zero results
+    """
     applications_values = []
     for date in date_range:
         date_str = date.strftime("%Y-%m-%d")
