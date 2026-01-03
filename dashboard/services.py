@@ -93,6 +93,7 @@ def get_percentage_rejected(user):
 
 def get_average_time_response(user):
     applications = Application.objects.filter(user=user).order_by("application_date")
+    average = 0
     if applications:
         days = []
         for application in applications:
@@ -100,9 +101,8 @@ def get_average_time_response(user):
                 continue
             difference = application.response_date - application.application_date.date()
             days.append(difference.days)
-        
-        average = sum(days) / len(days)
-    else:
-        average = 0
+            
+        if days:
+            average = sum(days) / len(days)
     
     return average
