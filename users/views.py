@@ -40,7 +40,7 @@ def edit_user(request):
         if form.is_valid():
             form.save()
             messages.success(request, f'Se han guardado los cambios en tu perfil')
-            redirect("applications:applications_list")
+            return redirect("applications:applications_list")
     else:
         form = CustomUserChangeForm(instance=current_user)
 
